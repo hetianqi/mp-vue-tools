@@ -1,0 +1,38 @@
+{
+  "name": "mp-vue-tools",
+  "version": "1.0.0",
+  "description": "Vue相关的工具，包括组件、插件、指令等",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hetianqi/mp-vue-tools.git"
+  },
+  "author": "hetianqi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hetianqi/mp-vue-tools/issues"
+  },
+  "homepage": "https://github.com/hetianqi/mp-vue-tools#readme",
+  "devDependencies": {
+    "autoprefixer-loader": "^3.2.0",
+    "axios": "^0.17.1",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "copy-webpack-plugin": "^4.3.1",
+    "css-loader": "^0.28.9",
+    "es6-promise": "^4.2.4",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.6",
+    "less": "^2.7.3",
+    "less-loader": "^4.0.5",
+    "vue": "^2.5.13",
+    "vue-loader": "^13.7.0",
+    "vue-style-loader": "^3.1.1",
+    "vue-template-compiler": "^2.5.13",
+    "webpack": "^3.10.0"
+  }
+}

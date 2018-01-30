@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue工具库</title>
+    <link rel="stylesheet" href="./dist/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./dist/static/css/common.css">
+    <link rel="stylesheet" href="./dist/mp-vue-tools.css">
+</head>
+<body>
+    <div id="app">
+        <div class="navbar navbar-gray" role="navigation" id="header">
+            <div class="container">
+                <div class="navbar-header">
+                    <button class="collapsed navbar-toggle" type="button" data-toggle="collapse" data-target="#menu">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="./">
+                        <i class="fa fa-home"></i>
+                        vue工具库
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <h2 class="page-header">表格</h2>
+
+            <mp-table max-height="400">
+                <table class="table table-bordered" slot-scope="props">
+                    <thead>
+                        <tr>
+                            <th v-for="column in columnList" :width="column.width">{{column.name}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="user in userList">
+                            <td v-for="column in columnList">
+                                <span>{{user[column.field]}}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </mp-table>
+            <mp-pager :page-index.sync="pageIndex" :page-size.sync="pageSize" :total="total" @on-paging="getUserList"></mp-pager>
+        </div>
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script src="./dist/mp-vue-tools.js"></script>
+    <script>
+        var http = Vue.http;
+        var vm;
+        new Vue({
+            el: '#app',
+            data: function () {
+                return {
+                    columnList: [
+                        {
+                            name: '工号',
+                            field: 'Badge',
+                            width: 300,
+                            isShow: true
+                        }, {
+                            name: '姓名',
+                            field: 'Name',
+                            width: 300,
+                            isShow: true
+                        }, {
+                            name: '姓名拼音',
+                            field: 'SpellName',
+                            width: 300,
+                            isShow: true
+                        }, {
+                            name: '一级\n部门名称',
+                            field: 'OneDepName',
+                            width: 300,
+                            isShow: true
+                        }, {
+                            name: '邮箱',
+                            field: 'Email',
+                            width: 600,
+                            isShow: true
+                        }
+                    ],
+                    userList: [],
+                    total: 0,
+                    pageIndex: 1,
+                    pageSize: 20
+                };
+            },
+            created: function () {
+                vm = this;
+                vm.getUserList();
+            },
+            methods: {
+                getUserList: function () {
+                    http.jsonp('http://192.168.102.12:100/Test/User/GetList', {
+                        params: {
+                            pageIndex: vm.pageIndex,
+                            pageSize: vm.pageSize
+                        }
+                    })
+                    .then(function (response) {
+                        vm.userList = response.data.data;
+                        vm.total = response.data.total;
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
