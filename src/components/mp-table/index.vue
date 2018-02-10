@@ -1,21 +1,73 @@
 <template>
     <div class="mp-table">
-        <div class="mp-table-inner" :style="{maxHeight: maxHeight + 'px'}" @scroll="onScroll" ref="tableInner">
-            <div class="mp-table-header" :style="{'padding-right': headerPaddingRight + 'px'}">
+        <div
+            class="mp-table-inner" 
+            ref="tableInner"
+            :style="{maxHeight: maxHeight + 'px'}"
+            @scroll="onScroll">
+            <div
+                class="mp-table-header"
+                :style="{'padding-right': headerPaddingRight + 'px'}">
                 <div class="mp-table-header-outer">
-                    <div class="mp-table-header-inner" ref="headerInner" :style="{left: scrollLeft + 'px'}">
+                    <div class="mp-table-header-inner" ref="headerInner">
                         <slot pos="header"></slot>
                     </div>
                 </div>                
             </div>
-            <div class="mp-table-body" ref="tableBody">
+            <div
+                class="mp-table-body"
+                ref="tableBody">
                 <slot pos="body"></slot>
             </div>
         </div>
     </div>
 </template>
 
+<script>
+import onElementResize from '../../libs/on-element-resize';
+import getScrollbarWidth from '../../libs/get-scrollbar-width';
+var requestAnimationFrame = require('../../libs/util').default.requestAnimationFrame;
+
+export default {
+    name: 'mp-table',
+    props: {
+        maxHeight: Number
+    },
+    data () {
+        return {
+            scrollLeft: 0,
+            headerPaddingRight: 0
+        };
+    },
+    mounted: function () {
+        this.$nextTick(() => {
+            // 移除表头table的tbody
+            var tbody = this.$refs.headerInner.querySelector('tbody');
+            tbody && tbody.parentNode.removeChild(tbody);
+
+            // 监听dom宽高变化
+            onElementResize(this.$refs.tableBody, () => {
+                // this.$refs.tableInner.style.width = this.$refs.tableBody.offsetWidth + 'px';
+                this.headerPaddingRight = this.$refs.tableInner.clientWidth < this.$refs.tableInner.offsetWidth ? getScrollbarWidth() : 0;
+            });
+        });
+    },
+    methods: {
+        onScroll (evt) {
+            requestAnimationFrame(() => {
+                this.$refs.headerInner.style.left = -evt.target.scrollLeft + 'px';
+            });
+        }
+    }
+}
+</script>
+
 <style lang="less">
+mp-table {
+    display: block;
+    visibility: hidden;
+    overflow: hidden;
+}
 .mp-table {
     position: relative;
 }
@@ -68,37 +120,3 @@
     cursor: col-resize;
 }
 </style>
-
-<script>
-import onElementResize from '../../libs/on-element-resize';
-import getScrollbarWidth from '../../libs/get-scrollbar-width';
-
-export default {
-    props: {
-        maxHeight: String
-    },
-    data () {
-        return {
-            scrollLeft: 0,
-            headerPaddingRight: 0
-        };
-    },
-    mounted: function () {
-        this.$nextTick(() => {
-            // 移除表头table的tbody
-            var tbody = this.$refs.headerInner.querySelector('tbody');
-            tbody && tbody.parentNode.removeChild(tbody);
-
-            // 监听dom宽高变化
-            onElementResize(this.$refs.tableBody, () => {
-                this.headerPaddingRight = this.$refs.tableInner.clientWidth < this.$refs.tableInner.offsetWidth ? getScrollbarWidth() : 0;
-            });
-        });
-    },
-    methods: {
-        onScroll (evt) {
-            this.scrollLeft = -evt.target.scrollLeft;
-        }
-    }
-}
-</script>

@@ -103,6 +103,14 @@ const util = {
     formatMSDate (str, format) {
         var match = /\/Date\((\d+)\)\//.exec(str);
         return match ? util.formatDate(new Date(+match[1]), format) : '';
+    },
+
+    // requestAnimationFrame polyfill
+    requestAnimationFrame: window.requestAnimationFrame 
+        || window.webkitRequestAnimationFrame
+        || window.mozRequestAnimationFrame
+        || function (fn) {
+        setTimeout(fn, 20);
     }
 };
 

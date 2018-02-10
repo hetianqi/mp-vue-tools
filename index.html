@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="./dist/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="./dist/static/css/common.css">
     <link rel="stylesheet" href="./dist/mp-vue-tools.css">
+    <style>
+    .main {
+        margin-bottom: 500px;
+    }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -27,10 +32,10 @@
             </div>
         </div>
 
-        <div class="container">
+        <div class="container main">
             <h2 class="page-header">表格</h2>
 
-            <mp-table max-height="400">
+            <mp-table :max-height="400">
                 <table class="table table-bordered" slot-scope="props">
                     <thead>
                         <tr>
@@ -46,7 +51,27 @@
                     </tbody>
                 </table>
             </mp-table>
-            <mp-pager :page-index.sync="pageIndex" :page-size.sync="pageSize" :total="total" @on-paging="getUserList"></mp-pager>
+            <mp-pager :page-index.sync="pageIndex" :page-size.sync="pageSize" :total="total" @paging="getUserList"></mp-pager>
+            
+            <h2 class="page-header">自动补全</h2>
+            <mp-autocomplete input-class="form-control input-sm" v-model="itemNumber" @get-data="getData">
+                <table v-show="itemList.length">
+                    <thead>
+                        <tr>
+                            <th width="100">物品编码</th>
+                            <th>物品名称</th>
+                            <th width="200">产品系列</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in itemList" @click="selectItem(item)">
+                            <td>{{item.ID}}</td>
+                            <td>{{item.Name}}</td>
+                            <td>{{item.OriginData.Attributes.Cpxl}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </mp-autocomplete>
         </div>
     </div>
     <script src="./node_modules/vue/dist/vue.js"></script>
@@ -89,7 +114,9 @@
                     userList: [],
                     total: 0,
                     pageIndex: 1,
-                    pageSize: 20
+                    pageSize: 20,
+                    itemNumber: '',
+                    itemList: []
                 };
             },
             created: function () {
@@ -108,6 +135,21 @@
                         vm.userList = response.data.data;
                         vm.total = response.data.total;
                     });
+                },
+                getData (value) {
+                    this.itemList = [];
+                    if (!value || value.length < 2) return;
+                    http.jsonp('http://192.168.102.12:100/Selector/Product/GetCpList', {
+                        params: {
+                            name: value
+                        }
+                    })
+                    .then(function (res) {
+                        vm.itemList = res.data;
+                    });
+                },
+                selectItem (item) {
+                    this.itemNumber = item.ID;
                 }
             }
         });

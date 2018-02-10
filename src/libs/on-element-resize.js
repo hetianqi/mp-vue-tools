@@ -1,21 +1,18 @@
 
-var passiveEvents = false
-var requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
+var requestAnimationFrame = require('./util').default.requestAnimationFrame;;
 
+// 检测是否支持passive events
+var passiveEvents = false;
 try {
     var opts = Object.defineProperty({}, 'passive', {
-        get: function () {
-            passiveEvents = { passive: true }
+        get: function() {
+            passiveEvents = { passive: true };
         }
     });
-    if (!requestAnimationFrame) {
-        requestAnimationFrame = function (fn) {
-            setTimeout(fn, 20);
-        }
-    }
+    window.addEventListener('test', null, opts);
 } catch (e) {}
 
-export default function onelresize(ele, handler) {
+export default function onElementResize(ele, handler) {
     if (!(ele instanceof HTMLElement)) {
         throw new TypeError('ele is not instance of HTMLElement.');
     }
@@ -59,8 +56,8 @@ export default function onelresize(ele, handler) {
         ele.style.position = 'relative';
     }
 
-    expand.scrollTop = shrink.scrollTop = maxHeight;
     expand.scrollLeft = shrink.scrollLeft = maxWidth;
+    expand.scrollTop = shrink.scrollTop = maxHeight;
 
     var newWidth = 0;
     var newHeight = 0;
@@ -77,12 +74,12 @@ export default function onelresize(ele, handler) {
         newWidth = ele.offsetWidth || 1;
         newHeight = ele.offsetHeight || 1;
         if (newWidth !== lastWidth || newHeight !== lastHeight) {
-            requestAnimationFrame(onResize)
+            requestAnimationFrame(onResize);
         }
         expand.scrollTop = shrink.scrollTop = maxHeight;
         expand.scrollLeft = shrink.scrollLeft = maxWidth;
     }
 
-    expand.addEventListener('scroll', onScroll, passiveEvents)
-    shrink.addEventListener('scroll', onScroll, passiveEvents)
+    expand.addEventListener('scroll', onScroll, passiveEvents);
+    shrink.addEventListener('scroll', onScroll, passiveEvents);
 }

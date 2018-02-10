@@ -13,7 +13,8 @@ module.exports = {
 	entry: path.join(rootPath, 'src/index'),
 	output: {
 		filename: 'mp-vue-tools.js',
-		path: path.join(rootPath, 'dist')
+		path: path.join(rootPath, 'dist'),
+		libraryTarget: 'umd'
 	},
 	resolve: {
 		extensions: ['.js', '.vue']
@@ -29,33 +30,36 @@ module.exports = {
 		        options: {
 		        	loaders: {
 		        		css: ExtractTextPlugin.extract({
-		        			use: ['css-loader', 'autoprefixer-loader'],
+		        			use: ['css-loader', 'postcss-loader'],
 		        			fallback: 'vue-style-loader'
 		        		}),
 		        		less: ExtractTextPlugin.extract({
-		        			use: ['css-loader', 'autoprefixer-loader', 'less-loader'],
+		        			use: ['css-loader', 'postcss-loader', 'less-loader'],
 		        			fallback: 'vue-style-loader'
 		        		})
 		        	}
-		        }
+		        },
+				include: path.join(rootPath, 'src')
 	    	},
 			{
 				test: /\.js$/,
-				loader: 'babel-loader'
+				loader: 'babel-loader',
+				include: path.join(rootPath, 'src')
 			},
 			{
 				test: /\.css$/,
 				use: ExtractTextPlugin.extract({
-					use: ['css-loader', 'autoprefixer-loader'],
+					use: ['css-loader', 'postcss-loader'],
 					fallback: 'vue-style-loader'
 				})
 			},
 			{
 				test: /\.less$/,
 				use: ExtractTextPlugin.extract({
-					use: ['css-loader', 'autoprefixer-loader', 'less-loader'],
+					use: ['css-loader', 'postcss-loader', 'less-loader'],
 					fallback: 'vue-style-loader'
-				})
+				}),
+				include: path.join(rootPath, 'src')
 			},
 		    {
 		        test: /\.(woff2?|eot|ttf|otf|svg)(\?.*)?$/,

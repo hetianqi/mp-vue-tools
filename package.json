@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/hetianqi/mp-vue-tools#readme",
   "devDependencies": {
-    "autoprefixer-loader": "^3.2.0",
+    "autoprefixer": "^7.2.6",
     "axios": "^0.17.1",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
@@ -29,10 +29,15 @@
     "file-loader": "^1.1.6",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
+    "postcss-loader": "^2.1.0",
     "vue": "^2.5.13",
     "vue-loader": "^13.7.0",
     "vue-style-loader": "^3.1.1",
     "vue-template-compiler": "^2.5.13",
     "webpack": "^3.10.0"
-  }
+  },
+  "browserslist": [
+    "chrome >= 40",
+    "ie >= 9"
+  ]
 }
