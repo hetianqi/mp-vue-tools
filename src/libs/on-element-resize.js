@@ -23,7 +23,7 @@ export default function onElementResize(ele, handler) {
     }    
 
     function initEvent() {
-        // 如果元素被隐藏，则定时检测，知道元素显示出来再初始化监听尺寸变化
+        // 如果元素被隐藏，则定时检测，直到元素显示出来再初始化监听尺寸变化
         if (ele.offsetWidth === 0 && ele.offsetHeight === 0) {
             setTimeout(initEvent, 200);
             return;
