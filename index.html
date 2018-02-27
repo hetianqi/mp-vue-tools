@@ -125,6 +125,7 @@
             },
             methods: {
                 getUserList: function () {
+                    console.log(vm.pageIndex);
                     http.jsonp('http://192.168.102.12:100/Test/User/GetList', {
                         params: {
                             pageIndex: vm.pageIndex,

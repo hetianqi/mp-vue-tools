@@ -52,11 +52,10 @@ export default {
         handleInput (evt) {
             var value = evt.target.value;
             this.$emit('input', value);
-            this.$emit('get-data', value);
         },
         handleFocus (evt) {
             this.isFocus = true;
-            this.$emit('get-data', evt.target.value);
+            this.$emit('input', evt.target.value);
         },
         handleBlur (evt) {
             setTimeout(() => {

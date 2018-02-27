@@ -1,23 +1,21 @@
 <template>
     <div class="mp-table">
         <div
-            class="mp-table-inner" 
-            ref="tableInner"
+            class="mp-table-header"
+            :style="{'padding-right': headerPaddingRight + 'px'}">
+            <div class="mp-table-header-outer">
+                <div class="mp-table-header-inner" ref="tableHeaderInner">
+                    <slot pos="tableHeader"></slot>
+                </div>
+            </div>
+        </div>
+        <div
+            class="mp-table-body" 
+            ref="tableBody"
             :style="{maxHeight: maxHeight + 'px'}"
             @scroll="onScroll">
-            <div
-                class="mp-table-header"
-                :style="{'padding-right': headerPaddingRight + 'px'}">
-                <div class="mp-table-header-outer">
-                    <div class="mp-table-header-inner" ref="headerInner">
-                        <slot pos="header"></slot>
-                    </div>
-                </div>                
-            </div>
-            <div
-                class="mp-table-body"
-                ref="tableBody">
-                <slot pos="body"></slot>
+            <div class="mp-table-body-inner" ref="tableBodyInner">
+                <slot pos="tableBody"></slot>
             </div>
         </div>
     </div>
@@ -35,27 +33,24 @@ export default {
     },
     data () {
         return {
-            scrollLeft: 0,
             headerPaddingRight: 0
         };
     },
     mounted: function () {
         this.$nextTick(() => {
             // 移除表头table的tbody
-            var tbody = this.$refs.headerInner.querySelector('tbody');
+            var tbody = this.$refs.tableHeaderInner.querySelector('tbody');
             tbody && tbody.parentNode.removeChild(tbody);
-
             // 监听dom宽高变化
-            onElementResize(this.$refs.tableBody, () => {
-                // this.$refs.tableInner.style.width = this.$refs.tableBody.offsetWidth + 'px';
-                this.headerPaddingRight = this.$refs.tableInner.clientWidth < this.$refs.tableInner.offsetWidth ? getScrollbarWidth() : 0;
+            onElementResize(this.$refs.tableBodyInner, () => {
+                this.headerPaddingRight = this.$refs.tableBody.offsetWidth - this.$refs.tableBody.clientWidth;
             });
         });
     },
     methods: {
         onScroll (evt) {
             requestAnimationFrame(() => {
-                this.$refs.headerInner.style.left = -evt.target.scrollLeft + 'px';
+                this.$refs.tableHeaderInner.style.left = -evt.target.scrollLeft + 'px';
             });
         }
     }
@@ -71,10 +66,6 @@ mp-table {
 .mp-table {
     position: relative;
 }
-.mp-table-inner {
-    min-height: 0%;
-    overflow: auto;
-}
 .mp-table-header {
     position: absolute;
     left: 0;
@@ -88,6 +79,10 @@ mp-table {
 }
 .mp-table-header-inner {    
     position: relative;
+}
+.mp-table-body {
+    min-height: 0%;
+    overflow: auto;
 }
 .mpui-th-resize {
     position: relative;

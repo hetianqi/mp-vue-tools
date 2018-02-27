@@ -7,6 +7,7 @@ import MpPager from './components/mp-pager';
 import MpAutocomplete from './components/mp-autocomplete';
 
 import MpShowDirective from './directives/mp-show';
+import TextEllipsisDirective from './directives/text-ellipsis';
 
 // promise polyfill
 require('es6-promise').polyfill();
@@ -29,6 +30,7 @@ function install(Vue) {
 
     // 注册指令
     Vue.directive(MpShowDirective.directiveName, MpShowDirective);
+    Vue.directive(TextEllipsisDirective.directiveName, TextEllipsisDirective);
 
     // 注册插件
     Vue.prototype.$http = axios;
@@ -37,11 +39,15 @@ function install(Vue) {
 
 const MpVueTools = {
     install,
-    http: axios,
 
+    // 组件
     MpTable,
     MpPager,
-    MpAutocomplete
+    MpAutocomplete,
+
+    // 工具类
+    util,    
+    http: axios
 };
 
 // 自动注册mp-vue-tools
