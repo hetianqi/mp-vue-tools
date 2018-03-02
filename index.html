@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>vue工具库</title>
-    <link rel="stylesheet" href="./dist/static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./dist/static/css/common.css">
     <link rel="stylesheet" href="./dist/mp-vue-tools.css">
     <style>
     .main {
@@ -25,7 +23,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="./">
-                        <i class="fa fa-home"></i>
+                        <i class="glyphicon glyphicon-home"></i>
                         vue工具库
                     </a>
                 </div>
@@ -54,31 +52,62 @@
             <mp-pager :page-index.sync="pageIndex" :page-size.sync="pageSize" :total="total" @paging="getUserList"></mp-pager>
             
             <h2 class="page-header">自动补全</h2>
-            <mp-autocomplete input-class="form-control input-sm" v-model="itemNumber" @get-data="getData">
-                <table v-show="itemList.length">
-                    <thead>
-                        <tr>
-                            <th width="100">物品编码</th>
-                            <th>物品名称</th>
-                            <th width="200">产品系列</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="item in itemList" @click="selectItem(item)">
-                            <td>{{item.ID}}</td>
-                            <td>{{item.Name}}</td>
-                            <td>{{item.OriginData.Attributes.Cpxl}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </mp-autocomplete>
+            <div class="row">
+                <div class="col-md-3">
+                    <mp-autocomplete input-class="form-control input-sm" :width="400" v-model="itemNumber" @input="getProduct">
+                        <table v-show="itemList.length">
+                            <thead>
+                                <tr>
+                                    <th width="100">物品编码</th>
+                                    <th>物品名称</th>
+                                    <th width="200">产品系列</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="item in itemList" @click="selectItem(item)">
+                                    <td>{{item.ID}}</td>
+                                    <td>{{item.Name}}</td>
+                                    <td>{{item.OriginData.Attributes.Cpxl}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </mp-autocomplete>
+                </div>
+            </div>
+
+            <h2 class="page-header">选择器</h2>
+            <div class="row form-group">
+                <div class="col-md-2 control-label">人员选择：</div>
+                <div class="col-md-10">
+                    <button type="button" class="btn btn-primary" @click="selectOrganization('singlePeople')">单人</button>
+                    <button type="button" class="btn btn-success" @click="selectOrganization('multiPeople')">多人</button>
+                    <button type="button" class="btn btn-info" @click="selectOrganization('singleDep')">单部门</button>
+                    <button type="button" class="btn btn-warning" @click="selectOrganization('multiDep')">多部门</button>
+                    <button type="button" class="btn btn-danger" @click="selectOrganization('singleDepJob')">单部门职位</button>
+                    <button type="button" class="btn btn-default" @click="selectOrganization('multiDepJob')">多部门职位</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 control-label">产品选择：</div>
+                <div class="col-md-10">
+                    <button type="button" class="btn btn-primary" @click="selectSingleProduct('Cpx')">单产品线</button>
+                    <button type="button" class="btn btn-success" @click="selectMultiProduct('Cpx')">多产品线</button>
+                    <button type="button" class="btn btn-info" @click="selectSingleProduct('Cpxl')">单产品系列</button>
+                    <button type="button" class="btn btn-warning" @click="selectMultiProduct('Cpxl')">多产品系列</button>
+                    <button type="button" class="btn btn-danger" @click="selectSingleProduct('Cp')">单主机</button>
+                    <button type="button" class="btn btn-default" @click="selectMultiProduct('Cp')">多主机</button>
+                </div>
+            </div>
         </div>
     </div>
     <script src="./node_modules/vue/dist/vue.js"></script>
     <script src="./dist/mp-vue-tools.js"></script>
+    <script src="./dist/vendor/selector/index.js"></script>
     <script>
         var http = Vue.http;
         var vm;
+        selector = selector.default;
+        selector.baseUrl = './dist/vendor/selector/';
         new Vue({
             el: '#app',
             data: function () {
@@ -137,23 +166,52 @@
                         vm.total = response.data.total;
                     });
                 },
-                getData (value) {
+                getProduct: function (value) {
                     this.itemList = [];
                     if (!value || value.length < 2) return;
                     http.jsonp('http://192.168.102.12:100/Selector/Product/GetCpList', {
                         params: {
-                            name: value
+                            name: value,
+                            pageIndex: 1,
+                            pageSize: 20
                         }
                     })
                     .then(function (res) {
                         vm.itemList = res.data;
                     });
                 },
-                selectItem (item) {
+                selectItem: function (item) {
                     this.itemNumber = item.ID;
+                },
+                selectOrganization: function (type) {
+                    selector[type]({
+                        callback: function(data) {
+                            selector.close();
+                            console.log(data);
+                        }
+                    });
+                },
+                selectSingleProduct: function (type) {
+                    selector.singleProduct({
+                        type: type,
+                        callback: function(data) {
+                            selector.close();
+                            console.log(data);
+                        }
+                    });
+                },
+                selectMultiProduct: function (type) {
+                    selector.multiProduct({
+                        type: type,
+                        callback: function(data) {
+                            selector.close();
+                            console.log(data);
+                        }
+                    });
                 }
             }
         });
+        
     </script>
 </body>
 </html>

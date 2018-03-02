@@ -1,21 +1,25 @@
 import axios from 'axios';
-import axiosJsonp from './libs/axios-jsonp';
-import util from './libs/util';
+import axiosJsonp from './lib/axios-jsonp';
+import * as util from './lib/util';
+import * as uiv from 'uiv';
 
-import MpTable from './components/mp-table';
-import MpPager from './components/mp-pager';
-import MpAutocomplete from './components/mp-autocomplete';
+import MpTable from './component/mp-table/index.vue';
+import MpPager from './component/mp-pager/index.vue';
+import MpAutocomplete from './component/mp-autocomplete/index.vue';
 
-import MpShowDirective from './directives/mp-show';
-import TextEllipsisDirective from './directives/text-ellipsis';
+import MpShowDirective from './directive/mp-show';
+import TextEllipsisDirective from './directive/text-ellipsis';
+
+import MpIframeModal from './service/mp-iframe-modal';
 
 // promise polyfill
-require('es6-promise').polyfill();
+import esPromise from 'es6-promise';
+esPromise.polyfill();
 // classList polyfill
-require('./libs/classlist-polyfill');
+import './lib/classlist-polyfill';
 
 // 引入styles
-require('./styles/index.less');
+import './style/index.less';
 
 // 为axio增加jsonp支持
 axios.jsonp = axios.create({
@@ -37,22 +41,23 @@ function install(Vue) {
     Vue.http = axios;
 }
 
-const MpVueTools = {
-    install,
+// 自动注册mp-vue-tools
+if (typeof Vue !== 'undefined') {
+    Vue.use({ install });
+    Vue.use(uiv);
+}
 
+export {
     // 组件
     MpTable,
     MpPager,
     MpAutocomplete,
 
+    // 服务
+    MpIframeModal,
+
     // 工具类
-    util,    
-    http: axios
+    util,
+    axios as http
 };
-
-// 自动注册mp-vue-tools
-if (typeof Vue !== 'undefined') {
-    Vue.use(MpVueTools);
-}
-
-module.exports = MpVueTools;
+export * from 'uiv';

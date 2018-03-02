@@ -4,23 +4,20 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const config = require('./config');
-const rootPath = config.rootPath;
 
 const cssExtract = new ExtractTextPlugin('mp-vue-tools.css');
 
 module.exports = {
-	entry: path.join(rootPath, 'src/index'),
+	entry: path.join(__dirname, 'src/index'),
 	output: {
 		filename: 'mp-vue-tools.js',
-		path: path.join(rootPath, 'dist'),
+		path: path.join(__dirname, 'dist'),
+		library: 'mp-vue-tools',
 		libraryTarget: 'umd'
 	},
-	resolve: {
-		extensions: ['.js', '.vue']
-	},
 	externals: {
-        'vue': 'window.Vue'
+		'vue': 'Vue',
+		'mp-vue-tools': 'mp-vue-tools'
     },
 	module: {
 		rules: [
@@ -39,12 +36,12 @@ module.exports = {
 		        		})
 		        	}
 		        },
-				include: path.join(rootPath, 'src')
+				include: path.join(__dirname, 'src')
 	    	},
 			{
 				test: /\.js$/,
 				loader: 'babel-loader',
-				include: path.join(rootPath, 'src')
+				include: path.join(__dirname, 'src')
 			},
 			{
 				test: /\.css$/,
@@ -59,15 +56,26 @@ module.exports = {
 					use: ['css-loader', 'postcss-loader', 'less-loader'],
 					fallback: 'vue-style-loader'
 				}),
-				include: path.join(rootPath, 'src')
+				include: path.join(__dirname, 'src')
 			},
 		    {
-		        test: /\.(woff2?|eot|ttf|otf|svg)(\?.*)?$/,
-		        loader: 'file-loader',
+		        test: /\.(jpe?g|png|gif)?$/,
+				loader: 'file-loader',
+				include: path.join(__dirname, 'src/style/img'),				
 		        query: {
 			        name: '[name].[ext]',
-			        publicPath: '../../',
-			        outputPath: 'static/fonts/'
+			        publicPath: './',
+			        outputPath: 'img/'
+		        }
+		    },
+		    {
+		        test: /\.(woff2?|eot|ttf|otf|svg)(\?.*)?$/,
+				loader: 'file-loader',
+				include: path.join(__dirname, 'src/style/fonts'),
+		        query: {
+			        name: '[name].[ext]',
+			        publicPath: './',
+			        outputPath: 'fonts/'
 		        }
 		    }
 		]
@@ -79,14 +87,9 @@ module.exports = {
 	    	}
 	    }),
 	    new CopyWebpackPlugin([{
-	    	from: path.join(rootPath, 'src/static'),
-	    	to: path.join(rootPath, 'dist/static')
+	    	from: path.join(__dirname, 'src/vendor'),
+	    	to: path.join(__dirname, 'dist/vendor')
 	    }]),
-	    /*new webpack.optimize.UglifyJsPlugin({ // 压缩JS 生产环境
-		    compress: {
-		    	warnings: false
-		    }
-	    }),*/
 		cssExtract
 	]
 };
