@@ -1,6 +1,5 @@
 import Vue from 'vue'
-import MpIframeModal from './mp-iframe-modal.vue'
-
+import MpIframeModal from './mp-iframe-modal.vue';
 import { removeDom, removeOf } from '../lib/util';
 
 const queue = [];

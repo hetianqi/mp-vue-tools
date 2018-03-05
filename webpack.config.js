@@ -4,7 +4,6 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-
 const cssExtract = new ExtractTextPlugin('mp-vue-tools.css');
 
 module.exports = {
@@ -16,8 +15,12 @@ module.exports = {
 		libraryTarget: 'umd'
 	},
 	externals: {
-		'vue': 'Vue',
-		'mp-vue-tools': 'mp-vue-tools'
+		'vue': {
+			commonjs: 'vue',	
+			commonjs2: 'vue',
+			amd: 'vue',
+			root: 'Vue'
+		}
     },
 	module: {
 		rules: [
@@ -87,8 +90,8 @@ module.exports = {
 	    	}
 	    }),
 	    new CopyWebpackPlugin([{
-	    	from: path.join(__dirname, 'src/vendor'),
-	    	to: path.join(__dirname, 'dist/vendor')
+	    	from: path.join(__dirname, 'src/static'),
+	    	to: path.join(__dirname, 'dist/static')
 	    }]),
 		cssExtract
 	]

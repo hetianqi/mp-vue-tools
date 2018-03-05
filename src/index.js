@@ -1,7 +1,7 @@
 import axios from 'axios';
 import axiosJsonp from './lib/axios-jsonp';
 import * as util from './lib/util';
-import * as uiv from 'uiv';
+import { Carousel, Slide, Collapse, Dropdown, Modal, Tab, Tabs, DatePicker, Affix, Alert, Pagination, Tooltip, Popover, TimePicker, Typeahead, ProgressBar, ProgressBarStack, Breadcrumbs, BreadcrumbItem, Btn, BtnGroup, BtnToolbar, MultiSelect, Navbar, NavbarNav, NavbarForm, NavbarText, tooltip, popover, scrollspy, MessageBox, Notification, install as uivInstall } from 'uiv';
 
 import MpTable from './component/mp-table/index.vue';
 import MpPager from './component/mp-pager/index.vue';
@@ -39,12 +39,13 @@ function install(Vue) {
     // 注册插件
     Vue.prototype.$http = axios;
     Vue.http = axios;
+
+    uivInstall(Vue);
 }
 
 // 自动注册mp-vue-tools
 if (typeof Vue !== 'undefined') {
     Vue.use({ install });
-    Vue.use(uiv);
 }
 
 export {
@@ -58,6 +59,9 @@ export {
 
     // 工具类
     util,
-    axios as http
+    axios as http,
+
+    install
 };
-export * from 'uiv';
+// 导出uiv
+export { Carousel, Slide, Collapse, Dropdown, Modal, Tab, Tabs, DatePicker, Affix, Alert, Pagination, Tooltip, Popover, TimePicker, Typeahead, ProgressBar, ProgressBarStack, Breadcrumbs, BreadcrumbItem, Btn, BtnGroup, BtnToolbar, MultiSelect, Navbar, NavbarNav, NavbarForm, NavbarText, tooltip, popover, scrollspy, MessageBox, Notification };

@@ -4,6 +4,7 @@
     :title="title"
     :backdrop="false"
     :footer="false"
+    :dismiss-btn="true"
     :class="['iframe-modal']"
     @hide="onHide"
     ref="modal"

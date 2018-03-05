@@ -102,12 +102,12 @@
     </div>
     <script src="./node_modules/vue/dist/vue.js"></script>
     <script src="./dist/mp-vue-tools.js"></script>
-    <script src="./dist/vendor/selector/index.js"></script>
+    <script src="./dist/static/selector/index.js"></script>
     <script>
         var http = Vue.http;
         var vm;
         selector = selector.default;
-        selector.baseUrl = './dist/vendor/selector/';
+        selector.baseUrl = './dist/static/selector/';
         new Vue({
             el: '#app',
             data: function () {
