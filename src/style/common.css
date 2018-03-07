@@ -12,6 +12,7 @@
 
 body {
     font-family: Helvetica Neue, Arial, Microsoft Yahei;
+    word-break: break-all;
 }
 
 article,

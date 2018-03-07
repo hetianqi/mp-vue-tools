@@ -157,7 +157,7 @@ mp-table {
 }
 .mp-table-resize-line {
     position: absolute;
-    right: -0.5px;
+    right: -1px;
     top: 0;
     z-index: 1;
     width: 5px;

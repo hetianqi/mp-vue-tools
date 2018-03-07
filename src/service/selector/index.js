@@ -52,7 +52,7 @@ let selector = {
 			title: '单人',
 			width: 932,
 			height: 480,
-			src: this.rootUrl + 'Selector/SinglePeople?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.hostname),
+			src: this.rootUrl + 'Selector/SinglePeople?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.host),
 			onHide() {
 				hide(option);
 			},
@@ -73,7 +73,7 @@ let selector = {
 			title: '多人',
 			width: 932,
 			height: 480,
-			src: this.rootUrl + 'Selector/MultiPeople?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.hostname),
+			src: this.rootUrl + 'Selector/MultiPeople?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.host),
 			onHide() {
 				hide(option);
 			},
@@ -94,7 +94,7 @@ let selector = {
 			title: '单部门',
 			width: 802,
 			height: 480,
-			src: this.rootUrl + 'Selector/SingleDep?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.hostname),
+			src: this.rootUrl + 'Selector/SingleDep?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.host),
 			onHide() {
 				hide(option);
 			},
@@ -115,7 +115,7 @@ let selector = {
 			title: '多部门',
 			width: 802,
 			height: 480,
-			src: this.rootUrl + 'Selector/MultiDep?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.hostname),
+			src: this.rootUrl + 'Selector/MultiDep?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.host),
 			onHide() {
 				hide(option);
 			},
@@ -136,7 +136,7 @@ let selector = {
 			title: '单职位',
 			width: 502,
 			height: 480,
-			src: this.rootUrl + 'Selector/SingleJob?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.hostname),
+			src: this.rootUrl + 'Selector/SingleJob?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.host),
 			onHide() {
 				hide(option);
 			},
@@ -157,7 +157,7 @@ let selector = {
 			title: '多职位',
 			width: 502,
 			height: 480,
-			src: this.rootUrl + 'Selector/MultiJob?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.hostname),
+			src: this.rootUrl + 'Selector/MultiJob?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.host),
 			onHide() {
 				hide(option);
 			},
@@ -178,7 +178,7 @@ let selector = {
 			title: '单部门职位',
 			width: 802,
 			height: 480,
-			src: this.rootUrl + 'Selector/SingleDepJob?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.hostname),
+			src: this.rootUrl + 'Selector/SingleDepJob?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.host),
 			onHide() {
 				hide(option);
 			},
@@ -199,7 +199,7 @@ let selector = {
 			title: '多部门职位',
 			width: 802,
 			height: 480,
-			src: this.rootUrl + 'Selector/MultiDepJob?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.hostname),
+			src: this.rootUrl + 'Selector/MultiDepJob?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.host),
 			onHide() {
 				hide(option);
 			},
@@ -220,7 +220,7 @@ let selector = {
 			title: '单产品',
 			width: 532,
 			height: 480,
-			src: this.rootUrl + 'Selector/SingleProduct?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.hostname),
+			src: this.rootUrl + 'Selector/SingleProduct?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.host),
 			onHide() {
 				hide(option);
 			},
@@ -241,7 +241,7 @@ let selector = {
 			title: '多产品',
 			width: 802,
 			height: 480,
-			src: this.rootUrl + 'Selector/MultiProduct?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.hostname),
+			src: this.rootUrl + 'Selector/MultiProduct?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.host),
 			onHide() {
 				hide(option);
 			},
