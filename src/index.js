@@ -3,14 +3,15 @@ import axiosJsonp from './lib/axios-jsonp';
 import * as util from './lib/util';
 import { Carousel, Slide, Collapse, Dropdown, Modal, Tab, Tabs, DatePicker, Affix, Alert, Pagination, Tooltip, Popover, TimePicker, Typeahead, ProgressBar, ProgressBarStack, Breadcrumbs, BreadcrumbItem, Btn, BtnGroup, BtnToolbar, MultiSelect, Navbar, NavbarNav, NavbarForm, NavbarText, tooltip, popover, scrollspy, MessageBox, Notification, install as uivInstall } from 'uiv';
 
-import MpTable from './component/mp-table/index.vue';
+import MpTable from './component/mp-table/index';
 import MpPager from './component/mp-pager/index.vue';
 import MpAutocomplete from './component/mp-autocomplete/index.vue';
 
-import MpShowDirective from './directive/mp-show';
-import TextEllipsisDirective from './directive/text-ellipsis';
+import MpShow from './directive/mp-show';
+import TextEllipsis from './directive/text-ellipsis';
 
-import MpIframeModal from './service/mp-iframe-modal';
+import iframeModal from './service/iframe-modal';
+import selector from './service/selector';
 
 // promise polyfill
 import esPromise from 'es6-promise';
@@ -33,8 +34,8 @@ function install(Vue) {
     Vue.component(MpAutocomplete.name, MpAutocomplete);
 
     // 注册指令
-    Vue.directive(MpShowDirective.directiveName, MpShowDirective);
-    Vue.directive(TextEllipsisDirective.directiveName, TextEllipsisDirective);
+    Vue.directive(MpShow.directiveName, MpShow);
+    Vue.directive(TextEllipsis.directiveName, TextEllipsis);
 
     // 注册插件
     Vue.prototype.$http = axios;
@@ -55,7 +56,8 @@ export {
     MpAutocomplete,
 
     // 服务
-    MpIframeModal,
+    iframeModal,
+    selector,
 
     // 工具类
     util,

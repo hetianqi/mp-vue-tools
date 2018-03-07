@@ -18,7 +18,7 @@ export default function onElementResize(ele, handler) {
     // https://www.w3.org/TR/html/syntax.html#writing-html-documents-elements
     if (/^(area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr|script|style|textarea|title)$/i.test(ele.tagName)) {
         throw new TypeError('Unsupported tag type. Change the tag or wrap it in a supported tag(e.g. div).');
-    }    
+    }
 
     function initEvent() {
         // 如果元素被隐藏，则定时检测，直到元素显示出来再初始化监听尺寸变化
@@ -69,12 +69,16 @@ export default function onElementResize(ele, handler) {
         var newHeight = 0;
     
         function onScroll() {
+            requestAnimationFrame(checkResize);
+        }
+
+        function checkResize() {            
             newWidth = ele.offsetWidth || 1;
             newHeight = ele.offsetHeight || 1;
             if (newWidth !== lastWidth || newHeight !== lastHeight) {
                 lastWidth = newWidth;
                 lastHeight = newHeight;
-                requestAnimationFrame(onResize);
+                onResize();
             }
             expand.scrollTop = shrink.scrollTop = maxHeight;
             expand.scrollLeft = shrink.scrollLeft = maxWidth;
@@ -90,5 +94,32 @@ export default function onElementResize(ele, handler) {
         onResize();
     }
 
-    initEvent();
+    // IE9 hack
+    function hack() {
+        var lastWidth = ele.offsetWidth || 1;
+        var lastHeight = ele.offsetHeight || 1;
+        
+        function checkResize() {
+            var newWidth = ele.offsetWidth || 1;
+            var newHeight = ele.offsetHeight || 1;
+            if (newWidth !== lastWidth || newHeight !== lastHeight) {
+                lastWidth = newWidth;
+                lastHeight = newHeight;
+                onResize();
+            }
+            setTimeout(checkResize, 200);
+        }
+
+        function onResize() {
+            handler && handler();
+        }
+
+        checkResize();
+    }
+
+    if (window.FormData) {
+        initEvent();
+    } else {
+        hack();
+    }
 }

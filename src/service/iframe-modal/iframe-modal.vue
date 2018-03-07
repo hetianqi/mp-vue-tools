@@ -10,7 +10,7 @@
     ref="modal"
     >
         <div class="iframe-box" ref="iframeBox">
-            <iframe :src="src" frameborder="0"></iframe>
+            <iframe :src="src" frameborder="0" @load="onLoad"></iframe>
         </div>
     </modal>
 </template>
@@ -39,6 +39,7 @@ export default {
             type: [Number, String],
             default: 400
         },
+        onLoad: Function,
         onHide: Function
     },
     data() {

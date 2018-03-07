@@ -33,11 +33,11 @@
         <div class="container main">
             <h2 class="page-header">表格</h2>
 
-            <mp-table :max-height="400">
-                <table class="table table-bordered" slot-scope="props">
+            <mp-table :max-height="400" resize>
+                <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th v-for="column in columnList" :width="column.width">{{column.name}}</th>
+                            <th v-for="column in columnList" :style="{width: column.width + 'px'}">{{column.name}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -85,6 +85,8 @@
                     <button type="button" class="btn btn-warning" @click="selectOrganization('multiDep')">多部门</button>
                     <button type="button" class="btn btn-danger" @click="selectOrganization('singleDepJob')">单部门职位</button>
                     <button type="button" class="btn btn-default" @click="selectOrganization('multiDepJob')">多部门职位</button>
+                    <button type="button" class="btn btn-danger" @click="selectOrganization('singleJob')">单职位</button>
+                    <button type="button" class="btn btn-default" @click="selectOrganization('multiJob')">多职位</button>
                 </div>
             </div>
             <div class="row">
@@ -102,12 +104,12 @@
     </div>
     <script src="./node_modules/vue/dist/vue.js"></script>
     <script src="./dist/mp-vue-tools.js"></script>
-    <script src="./dist/static/selector/index.js"></script>
     <script>
         var http = Vue.http;
         var vm;
-        selector = selector.default;
-        selector.baseUrl = './dist/static/selector/';
+        var tools = window['mp-vue-tools'];
+        var selector = tools.selector;
+        selector.rootUrl = 'http://192.168.102.12:100/Selector/';
         new Vue({
             el: '#app',
             data: function () {
@@ -154,7 +156,6 @@
             },
             methods: {
                 getUserList: function () {
-                    console.log(vm.pageIndex);
                     http.jsonp('http://192.168.102.12:100/Test/User/GetList', {
                         params: {
                             pageIndex: vm.pageIndex,
