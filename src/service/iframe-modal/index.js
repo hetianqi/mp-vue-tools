@@ -9,7 +9,6 @@ export default function init(option) {
     option.onHide = function (...args) {
         removeDom(instance.$el);
         instance.$destroy();
-        removeOf(queue, instance);
         oldOnHide && oldOnHide.apply(this, args);
     };
     const instance = new Vue({
@@ -24,5 +23,8 @@ export default function init(option) {
 };
 
 init.close = function (instance) {
-    instance.toggle(false);
+    if (!instance) {
+        instance = queue.pop();
+    }
+    instance && instance.toggle(false);
 };

@@ -4,10 +4,6 @@
 
 import iframeModal from '../iframe-modal';
 
-// 占用全局变量
-let selectorGlobal = window.selectorGlobal || (window.selectorGlobal = {});
-// 实例队列
-let queue = [];
 // 回调函数队列
 let callbackQueue = [];
 
@@ -41,7 +37,6 @@ function hide(option) {
 
 let selector = {
 	rootUrl: 'http://webapi.maipu.com/Selector-v2/',
-	badge: '',
 	// 单人
 	singlePeople(option) {
 		option = option || {};
@@ -53,14 +48,13 @@ let selector = {
 			width: 932,
 			height: 480,
 			src: this.rootUrl + 'Selector/SinglePeople?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.host),
-			onHide() {
-				hide(option);
-			},
 			onLoad(evt) {
 				show(evt, option);
+			},
+			onHide() {
+				hide(option);
 			}
 		});
-		queue.push(instance);
 		return instance;
 	},
 	// 多人
@@ -74,14 +68,13 @@ let selector = {
 			width: 932,
 			height: 480,
 			src: this.rootUrl + 'Selector/MultiPeople?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.host),
-			onHide() {
-				hide(option);
-			},
 			onLoad(evt) {
 				show(evt, option);
+			},
+			onHide() {
+				hide(option);
 			}
 		});
-		queue.push(instance);
 		return instance;
 	},
 	// 单部门
@@ -95,14 +88,13 @@ let selector = {
 			width: 802,
 			height: 480,
 			src: this.rootUrl + 'Selector/SingleDep?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.host),
-			onHide() {
-				hide(option);
-			},
 			onLoad(evt) {
 				show(evt, option);
+			},
+			onHide() {
+				hide(option);
 			}
 		});
-		queue.push(instance);
 		return instance;
 	},
 	// 多部门
@@ -116,14 +108,13 @@ let selector = {
 			width: 802,
 			height: 480,
 			src: this.rootUrl + 'Selector/MultiDep?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.host),
-			onHide() {
-				hide(option);
-			},
 			onLoad(evt) {
 				show(evt, option);
+			},
+			onHide() {
+				hide(option);
 			}
 		});
-		queue.push(instance);
 		return instance;
 	},
 	// 单职位
@@ -137,14 +128,13 @@ let selector = {
 			width: 502,
 			height: 480,
 			src: this.rootUrl + 'Selector/SingleJob?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.host),
-			onHide() {
-				hide(option);
-			},
 			onLoad(evt) {
 				show(evt, option);
+			},
+			onHide() {
+				hide(option);
 			}
 		});
-		queue.push(instance);
 		return instance;
 	},
 	// 多职位
@@ -158,18 +148,17 @@ let selector = {
 			width: 502,
 			height: 480,
 			src: this.rootUrl + 'Selector/MultiJob?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.host),
-			onHide() {
-				hide(option);
-			},
 			onLoad(evt) {
 				show(evt, option);
+			},
+			onHide() {
+				hide(option);
 			}
 		});
-		queue.push(instance);
 		return instance;
 	},
 	// 单部门职位
-	singleDepJob (option) {
+	singleDepJob(option) {
 		option = option || {};
 		if (!option.callback) {
 			throw new Error('请指定callback');
@@ -179,18 +168,17 @@ let selector = {
 			width: 802,
 			height: 480,
 			src: this.rootUrl + 'Selector/SingleDepJob?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.host),
-			onHide() {
-				hide(option);
-			},
 			onLoad(evt) {
 				show(evt, option);
+			},
+			onHide() {
+				hide(option);
 			}
 		});
-		queue.push(instance);
 		return instance;
 	},
 	// 多部门职位
-	multiDepJob (option) {
+	multiDepJob(option) {
 		option = option || {};
 		if (!option.callback) {
 			throw new Error('请指定callback');
@@ -200,18 +188,17 @@ let selector = {
 			width: 802,
 			height: 480,
 			src: this.rootUrl + 'Selector/MultiDepJob?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.host),
-			onHide() {
-				hide(option);
-			},
 			onLoad(evt) {
 				show(evt, option);
+			},
+			onHide() {
+				hide(option);
 			}
 		});
-		queue.push(instance);
 		return instance;
 	},		
 	// 单产品
-	singleProduct (option) {
+	singleProduct(option) {
 		option = option || {};
 		if (!option.callback) {
 			throw new Error('请指定callback');
@@ -221,18 +208,17 @@ let selector = {
 			width: 532,
 			height: 480,
 			src: this.rootUrl + 'Selector/SingleProduct?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.host),
-			onHide() {
-				hide(option);
-			},
 			onLoad(evt) {
 				show(evt, option);
+			},
+			onHide() {
+				hide(option);
 			}
 		});
-		queue.push(instance);
 		return instance;
 	},
 	// 多产品
-	multiProduct (option) {
+	multiProduct(option) {
 		option = option || {};
 		if (!option.callback) {
 			throw new Error('请指定callback');
@@ -242,22 +228,18 @@ let selector = {
 			width: 802,
 			height: 480,
 			src: this.rootUrl + 'Selector/MultiProduct?origin=' + encodeURIComponent(window.location.protocol + '//' + window.location.host),
-			onHide() {
-				hide(option);
-			},
 			onLoad(evt) {
 				show(evt, option);
+			},
+			onHide() {
+				hide(option);
 			}
 		});
-		queue.push(instance);
 		return instance;
 	},
 	// 关闭选择器
 	close(instance) {
-		if (!instance) {
-			instance = queue.pop();
-		}
-		instance && iframeModal.close(instance);
+		iframeModal.close(instance);
 	}
 };
 
