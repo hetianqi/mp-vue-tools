@@ -54,54 +54,6 @@ export function isStringInteger(it, isNullable, isNegative) {
         || String(it).indexOf('.') === -1 && Math.floor(it) === Number(it) && (isNegative || +it >= 0);
 }
 
-// 在数组中查找指定元素
-export function indexOf(arr, item, keys) {
-    var index = -1;
-
-    if (!isArray(arr)) {
-        throw new TypeError(arr + ' is not a array');
-    }
-    if (!keys) {
-        index = arr.indexOf(item);
-    } else if (isArray(keys)) {
-        for (var i in arr) {
-            var temp = arr[i];
-            var key;
-            var isMathch = true;
-            for (var j in keys) {
-                key = keys[j];
-                if (temp[key] !== item[key]) {
-                    isMathch = false;
-                    break;
-                }
-            }
-            if (isMathch) {
-                index = i;
-                break;
-            }
-        }
-    } else {
-        for (var i in arr) {
-            var temp = arr[i];
-            var key;
-            if (temp[keys] === item[keys]) {
-                index = i;
-                break;
-            }
-        }
-    }
-
-    return index;
-}
-
-//在数组中删除元素
-export function removeOf(arr, item, keys) {
-    let index = indexOf(arr, item, keys);
-    if (index > -1) {
-        arr.splice(index, 1);
-    }
-}
-
 // 保留数字的小数位数
 // 不同于Number.prototype.toFiexed，不足位数的不会补全
 export function toFixed(num, digits) {

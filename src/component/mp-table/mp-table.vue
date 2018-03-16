@@ -25,7 +25,7 @@
 import onElementResize from '../../lib/on-element-resize';
 import getScrollbarWidth from '../../lib/get-scrollbar-width';
 import { requestAnimationFrame, removeOf } from '../../lib/util';
-import { on, indexOf, domContains, removeDom } from '../../lib/dom-util';
+import { on, domContains, removeDom } from '../../lib/dom-util';
 import props from './props';
 
 const queue = [];
@@ -57,7 +57,7 @@ export default {
         });
     },
     beforeDestroy() {
-        removeOf(queue, this);
+        queue.removeOf(this);
     },
     methods: {
         onScroll(evt) {
@@ -97,7 +97,7 @@ export default {
                 let headerCols = tableHeader.querySelectorAll('colgroup > col');
                 let bodyThs = tableBody.querySelectorAll('thead > tr > th');
                 let bodyCols = tableBody.querySelectorAll('colgroup > col');
-                let index = indexOf(headerThs, th);
+                let index = Array.prototype.indexOf.call(headerThs, th);
                 let oldClientX = evt.clientX;
                 let oldWidth = th.offsetWidth;
                 let resizeMask = document.createElement('div');

@@ -72,12 +72,7 @@ export function off(el, eventName, handler) {
 
 // 是否包含子元素
 export function contains(nodeList, item) {
-    return indexOf(nodeList, item) > -1;
-}
-
-// 子元素索引
-export function indexOf(nodeList, item) {
-    return Array.prototype.indexOf.call(nodeList, item);
+    return Array.prototype.indexOf.call(nodeList, item) > -1;
 }
 
 // 判断一个元素是否包含另一个元素

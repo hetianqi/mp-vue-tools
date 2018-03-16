@@ -20,8 +20,8 @@ import selector from './service/selector';
 // promise polyfill
 import esPromise from 'es6-promise';
 esPromise.polyfill();
-// classList polyfill
 import './lib/classlist-polyfill';
+import './lib/array-polyfill';
 
 // 为axio增加jsonp支持
 axios.jsonp = axios.create({

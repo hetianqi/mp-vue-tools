@@ -72,6 +72,9 @@ export default {
 </script>
 
 <style lang="less">
+mp-autocomplete {
+    visibility: hidden;
+}
 .mp-autocomplete {
     position: relative;
 }
