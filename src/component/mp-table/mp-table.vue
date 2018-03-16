@@ -24,44 +24,49 @@
 <script>
 import onElementResize from '../../lib/on-element-resize';
 import getScrollbarWidth from '../../lib/get-scrollbar-width';
-import { requestAnimationFrame, removeDom } from '../../lib/util';
-import { on, indexOf, domContains } from '../../lib/dom-util';
+import { requestAnimationFrame, removeOf } from '../../lib/util';
+import { on, indexOf, domContains, removeDom } from '../../lib/dom-util';
+import props from './props';
+
+const queue = [];
 
 export default {
-    props: {
-        maxHeight: Number,
-        resize: {
-            type: Boolean,
-            default: false
-        }
-    },
+    props: props,
     data() {
         return {
-            headerWidth: '100%'
+            headerWidth: '100%',
+            orderBy: this.defaultOrderBy,
+            orderSort: this.defaultOrderSort
         };
+    },
+    created() {
+        queue.push(this);
     },
     mounted() {
         this.$nextTick(() => {
             // 移除表头table的tbody
             let tbody = this.$refs.tableHeaderInner.querySelector('tbody');
             tbody && tbody.parentNode.removeChild(tbody);
-            if (this.resize) {
-                this.tableResize();
-            }
             // 监听dom宽高变化
             onElementResize(this.$refs.tableBodyInner, () => {
                 this.headerWidth = this.$refs.tableBody.clientWidth + 'px';
             });
+            if (this.resize) {
+                this.enableResize();
+            }
         });
+    },
+    beforeDestroy() {
+        removeOf(queue, this);
     },
     methods: {
         onScroll(evt) {
             this.$refs.tableHeaderInner.style.left = -evt.target.scrollLeft + 'px';
         },
         // 表头拖动
-        tableResize() {
-            let tableHeader = this.$refs.tableHeaderInner.children[0];
-            let tableBody = this.$refs.tableBodyInner.children[0];
+        enableResize() {
+            let tableHeader = this.$refs.tableHeaderInner.querySelector('table');
+            let tableBody = this.$refs.tableBodyInner.querySelector('table');
 
             // 鼠标滑过表头添加可拖动标识
             on(tableHeader, 'mouseenter', 'thead > tr > th', evt => {
@@ -120,9 +125,16 @@ export default {
                     removeDom(resizeMask);
                 });
             });
+        },
+        // 排序
+        onOrder(orderBy, orderSort) {
+            this.orderBy = orderBy;
+            this.orderSort = orderSort;
+            this.$emit('on-order', orderBy, orderSort);
         }
     }
-}
+};
+export { queue };
 </script>
 
 <style lang="less">
@@ -181,4 +193,26 @@ mp-table {
     z-index: 9999;
     cursor: col-resize;
 }
+.mp-table-order {
+    cursor: pointer;
+}
+.mp-table-order::after {
+    font-family: 'Glyphicons Halflings';
+    content: "\e119";
+    position: relative;
+    left: 2px;
+    top: 1px;
+    font-size: 12px;
+}
+.mp-table-order.asc,
+.mp-table-order.desc {
+    color: #428bca;
+}
+.mp-table-order.asc::after {
+    content: "\e093";
+}
+.mp-table-order.desc::after {
+    content: "\e094";
+}
+/* 表格排序end */
 </style>

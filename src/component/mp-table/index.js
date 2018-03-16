@@ -1,18 +1,14 @@
 import MpTable from './mp-table.vue';
-import { cloneVNodes } from '../../lib/util';
+import { cloneVNodes } from '../../lib/dom-util';
+import props from './props';
 
 export default {
     name: 'mp-table',
-    props: {
-        maxHeight: Number,
-        resize: {
-            type: Boolean,
-            default: false
-        }
-    },
+    props: props,
     render(h) {
         let tableBody = this.$slots.default;
         let tableHeader = cloneVNodes(tableBody, h);
+        let vm = this;
         
         return h(MpTable, {
             props: this.$props,
@@ -22,6 +18,11 @@ export default {
                         return tableHeader;
                     }
                     return tableBody;
+                }
+            },
+            on: {
+                'on-order': function(orderBy, orderSort) {
+                    vm.$emit('on-order', orderBy, orderSort);
                 }
             }
         });

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import IframeModal from './iframe-modal.vue';
-import { removeDom, removeOf } from '../../lib/util';
+import { removeOf } from '../../lib/util';
+import { removeDom } from '../../lib/dom-util';
 
 const queue = [];
 

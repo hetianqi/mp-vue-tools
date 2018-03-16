@@ -26,7 +26,12 @@ export default {
         // 输入框样式
         inputClass: String,
         // input框输入值，通过v-model绑定
-        value: String
+        value: String,
+        // 是否显示候选框
+        showResult: {
+            type: Boolean,
+            default: true
+        }
     },
     data () {
         return {
@@ -45,7 +50,7 @@ export default {
             return (this.inputClass || '').split(' ');
         },
         isShowResult () {
-            return this.isFocus;
+            return this.isFocus && this.showResult;
         }
     },
     methods: {

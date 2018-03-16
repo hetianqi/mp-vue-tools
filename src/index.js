@@ -12,6 +12,7 @@ import MpAutocomplete from './component/mp-autocomplete/index.vue';
 
 import MpShow from './directive/mp-show';
 import TextEllipsis from './directive/text-ellipsis';
+import TableOrder from './directive/table-order';
 
 import iframeModal from './service/iframe-modal';
 import selector from './service/selector';
@@ -51,6 +52,7 @@ const MpVueTools = {
         // 注册指令
         Vue.directive(MpShow.directiveName, MpShow);
         Vue.directive(TextEllipsis.directiveName, TextEllipsis);
+        Vue.directive(TableOrder.directiveName, TableOrder);
 
         // 注册插件
         Vue.prototype.$http = axios;

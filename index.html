@@ -14,7 +14,7 @@
 </head>
 <body>
     <div id="app">
-        <div class="navbar navbar-gray" role="navigation" id="header">
+        <div class="navbar navbar-gray" id="header">
             <div class="container">
                 <div class="navbar-header">
                     <button class="collapsed navbar-toggle" type="button" data-toggle="collapse" data-target="#menu">
@@ -32,12 +32,11 @@
 
         <div class="container main">
             <h2 class="page-header">表格</h2>
-
-            <mp-table :max-height="400" resize>
+            <mp-table :max-height="400" resize :default-order-by="orderBy" :default-order-sort="orderSort" @on-order="onOrder">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th v-for="column in columnList" :style="{width: column.width + 'px'}">{{column.name}}</th>
+                            <th v-for="column in columnList" :style="{width: column.width + 'px'}" v-table-order="column.field">{{column.name}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,20 +53,20 @@
             <h2 class="page-header">自动补全</h2>
             <div class="row">
                 <div class="col-md-3">
-                    <mp-autocomplete input-class="form-control input-sm" :width="400" v-model="itemNumber" @input="getProduct">
-                        <table v-show="itemList.length">
+                    <mp-autocomplete input-class="form-control input-sm" :width="400" v-model="userName" :show-result="!!itemList.length" @input="getOptions">
+                        <table>
                             <thead>
                                 <tr>
-                                    <th width="100">物品编码</th>
-                                    <th>物品名称</th>
-                                    <th width="200">产品系列</th>
+                                    <th width="100">工号</th>
+                                    <th width="100">姓名</th>
+                                    <th>部门</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="item in itemList" @click="selectItem(item)">
-                                    <td>{{item.ID}}</td>
+                                    <td>{{item.Badge}}</td>
                                     <td>{{item.Name}}</td>
-                                    <td>{{item.OriginData.Attributes.Cpxl}}</td>
+                                    <td>{{item.DepName}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -109,7 +108,6 @@
         var vm;
         var tools = window['mp-vue-tools'];
         var selector = tools.selector;
-        selector.rootUrl = 'http://webapi.mptest.com/Selector-v2/';
         new Vue({
             el: '#app',
             data: function () {
@@ -146,7 +144,9 @@
                     total: 0,
                     pageIndex: 1,
                     pageSize: 20,
-                    itemNumber: '',
+                    orderBy: 'Badge',
+                    orderSort: 'asc',
+                    userName: '',
                     itemList: []
                 };
             },
@@ -159,7 +159,9 @@
                     http.jsonp('http://192.168.102.12:100/Test/User/GetList', {
                         params: {
                             pageIndex: vm.pageIndex,
-                            pageSize: vm.pageSize
+                            pageSize: vm.pageSize,
+                            sname: vm.orderBy,
+                            sorder: vm.orderSort
                         }
                     })
                     .then(function (response) {
@@ -167,12 +169,12 @@
                         vm.total = response.data.total;
                     });
                 },
-                getProduct: function (value) {
+                getOptions: function (value) {
                     this.itemList = [];
-                    if (!value || value.length < 2) return;
-                    http.jsonp('http://192.168.102.12:100/Selector/Product/GetCpList', {
+                    if (!value || value.length < 1) return;
+                    http.jsonp('http://192.168.102.12:100/Selector/Organization/GetPeopleResult', {
                         params: {
-                            name: value,
+                            keyword: value,
                             pageIndex: 1,
                             pageSize: 20
                         }
@@ -182,7 +184,7 @@
                     });
                 },
                 selectItem: function (item) {
-                    this.itemNumber = item.ID;
+                    vm.userName = item.Name;
                 },
                 selectOrganization: function (type) {
                     selector[type]({
@@ -209,6 +211,12 @@
                             console.log(data);
                         }
                     });
+                },
+                onOrder: function (orderBy, orderSort) {
+                    vm.orderBy = orderBy;
+                    vm.orderSort = orderSort;
+                    vm.pageIndex = 1;
+                    vm.getUserList();
                 }
             }
         });
