@@ -142,6 +142,7 @@ export default {
             this.goPage(pageIndex);
         },
         changePageSize () {
+            this.pageIndexInner = 1;
             this.paging();
         }
     }
