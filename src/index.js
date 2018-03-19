@@ -9,6 +9,7 @@ import { Carousel, Slide, Collapse, Dropdown, Modal, Tab, Tabs, DatePicker, Affi
 import MpTable from './component/mp-table/index';
 import MpPager from './component/mp-pager/index.vue';
 import MpAutocomplete from './component/mp-autocomplete/index.vue';
+import MpTree from './component/mp-tree/index';
 
 import MpShow from './directive/mp-show';
 import TextEllipsis from './directive/text-ellipsis';
@@ -33,6 +34,7 @@ const MpVueTools = {
     MpTable,
     MpPager,
     MpAutocomplete,
+    MpTree,
 
     // 服务
     iframeModal,
@@ -48,6 +50,7 @@ const MpVueTools = {
         Vue.component(MpTable.name, MpTable);
         Vue.component(MpPager.name, MpPager);
         Vue.component(MpAutocomplete.name, MpAutocomplete);
+        Vue.component(MpTree.name, MpTree);
 
         // 注册指令
         Vue.directive(MpShow.directiveName, MpShow);
@@ -73,6 +76,7 @@ export {
     MpTable,
     MpPager,
     MpAutocomplete,
+    MpTree,
 
     // 服务
     iframeModal,

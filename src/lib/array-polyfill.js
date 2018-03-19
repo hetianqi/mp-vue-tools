@@ -86,22 +86,24 @@ if (!Array.prototype.findIndex) {
     });
 }
 
-Object.defineProperty(Array.prototype, 'removeOf', {
-    value: function(predicate) {
-        if (this == null) {
-            throw new TypeError('"this" is null or not defined');
+if (!Array.prototype.removeOf) {
+    Object.defineProperty(Array.prototype, 'removeOf', {
+        value: function(predicate) {
+            if (this == null) {
+                throw new TypeError('"this" is null or not defined');
+            }
+    
+            let index = -1;
+            if (typeof predicate !== 'function') {
+                index = this.findIndex(predicate);
+            } else {
+                index = this.indexOf(predicate);
+            }
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+            
+            return index;
         }
-
-        let index = -1;
-        if (typeof predicate !== 'function') {
-            index = this.findIndex(predicate);
-        } else {
-            index = this.indexOf(predicate);
-        }
-        if (index > -1) {
-            this.splice(index, 1);
-        }
-        
-        return index;
-    }
-});
+    });
+}

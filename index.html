@@ -10,6 +10,12 @@
     .main {
         margin-bottom: 500px;
     }
+    .folder {
+        color: #CCA545;
+    }
+    .file {
+        color: #337ab7;
+    }
     </style>
 </head>
 <body>
@@ -99,6 +105,10 @@
                     <button type="button" class="btn btn-default" @click="selectMultiProduct('Cp')">多主机</button>
                 </div>
             </div>
+
+            <h2 class="page-header">树形</h2>
+            <button class="btn btn-primary" @click="getCheckedPathList">获取选中节点</button>
+            <mp-tree :data="pathList" :on-expand="getPathList" ref="pathTree" @click-node="clickNode"></mp-tree>
         </div>
     </div>
     <script src="./node_modules/vue/dist/vue.js"></script>
@@ -147,12 +157,14 @@
                     orderBy: 'Badge',
                     orderSort: 'asc',
                     userName: '',
-                    itemList: []
+                    itemList: [],
+                    pathList: []
                 };
             },
             created: function () {
                 vm = this;
                 vm.getUserList();
+                vm.getPathList();
             },
             methods: {
                 getUserList: function () {
@@ -217,6 +229,44 @@
                     vm.orderSort = orderSort;
                     vm.pageIndex = 1;
                     vm.getUserList();
+                },
+                getPathList: function (parent, resolve) {
+                    http.jsonp('http://localhost:18002/FileTransport/GetDirectoryAndFileList', {
+                        params: {
+                            path: parent ? parent.data.FullName : ''
+                        },
+                        jsonpCallback: 'jsoncallback'
+                    })
+                    .then(function (response) {
+                        var data = response.data;
+                        if (data.State) {
+                            var list = parent ? parent.children = [] : vm.pathList;
+                            data.Data.DirectoryList.forEach(function (item) {
+                                list.push({
+                                    label: item.Name,
+                                    iconClass: 'glyphicon glyphicon-folder-open folder',
+                                    data: item
+                                });
+                            });
+                            data.Data.FileList.forEach(function (item) {
+                                list.push({
+                                    label: item.Name,
+                                    iconClass: 'glyphicon glyphicon-file file',
+                                    isLeaf: true,
+                                    showCheckbox: true,
+                                    data: item
+                                });
+                            });
+                            resolve && resolve();
+                        }
+                    });
+                },
+                getCheckedPathList: function () {
+                    var nodes = vm.$refs.pathTree.getCheckedNodes();
+                    console.log(nodes);
+                },
+                clickNode: function(node) {
+                    console.log(node);
                 }
             }
         });

@@ -1,5 +1,3 @@
-import Vue from 'vue';
-
 /**
  * 所有系统均可用的公用工具库
  */
@@ -120,3 +118,48 @@ export const requestAnimationFrame = window.requestAnimationFrame
     || function (fn) {
     setTimeout(fn, 20);
 };
+
+const queryStringMap = {};
+// 获取查询字符串
+export function queryString(key, url) {
+    if (typeof key !== 'string') {
+        throw new Error('key must be a string');
+    }
+    url = decodeURIComponent(url ? url : window.location.search);
+
+    var o;
+    if (!(o = queryStringMap[url])) {
+        o = {};
+        if (url && url.indexOf('?') > -1) {
+            var arr = url.split('?')[1].split('&');
+            var d;
+
+            arr.forEach(item => {
+                d = item.split('=');
+                o[d[0]] = d[1];
+            });
+        }
+        queryStringMap[url] = o;
+    }
+    for (var k in o) {
+        if (k.toLowerCase() === key.toLowerCase()) {
+            return o[k];
+        }
+    }    
+    return null;
+}
+
+// 计算文件大小
+export function getFileSize(fileSize) {
+    fileSize = parseInt(fileSize);
+
+    if (fileSize > 1024 * 1024 * 1024) {
+    return (fileSize / 1024 / 1024 / 1024).toFixed(2) + 'GB';
+    } else if (fileSize > 1024 * 1024) {
+        return (fileSize / 1024 / 1024).toFixed(2) + 'MB';
+    } else if (fileSize > 1024) {
+        return (fileSize / 1024).toFixed(2) + ' KB';
+    } else {
+        return fileSize + ' B';
+    }
+}
