@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import isInteger from '../../lib/util';
+import { isInteger } from '../../lib/util';
 
 export default {
     name: 'mp-pager',

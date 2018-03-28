@@ -18,16 +18,19 @@ import TableOrder from './directive/table-order';
 import iframeModal from './service/iframe-modal';
 import selector from './service/selector';
 
-// promise polyfill
-import esPromise from 'es6-promise';
-esPromise.polyfill();
-import './lib/classlist-polyfill';
-import './lib/array-polyfill';
+// polyfill
+import './lib/classlist-polyfill'; 
+import 'babel-polyfill';
 
 // 为axio增加jsonp支持
 axios.jsonp = axios.create({
     adapter: axiosJsonp
 });
+
+// http通用设置
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.headers.get['Cache-Control'] = 'no-cache';
+axios.defaults.headers.get['If-Modified-Since'] = 0;
 
 const MpVueTools = {
     // 组件
@@ -56,10 +59,6 @@ const MpVueTools = {
         Vue.directive(MpShow.directiveName, MpShow);
         Vue.directive(TextEllipsis.directiveName, TextEllipsis);
         Vue.directive(TableOrder.directiveName, TableOrder);
-
-        // 注册插件
-        Vue.prototype.$http = axios;
-        Vue.http = axios;
 
         uivInstall(Vue);
     }
