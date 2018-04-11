@@ -1,13 +1,13 @@
 <template>
     <modal
+    class="iframe-modal"
     v-model="isShow"
     :title="title"
     :backdrop="false"
     :footer="false"
     :dismiss-btn="true"
-    :class="['iframe-modal']"
-    @hide="onHide"
     ref="modal"
+    @hide="onHide"
     >
         <div class="iframe-box" ref="iframeBox">
             <iframe :src="src" frameborder="0" @load="onLoad"></iframe>

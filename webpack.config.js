@@ -1,13 +1,15 @@
 const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const cssExtract = new ExtractTextPlugin('mp-vue-tools.css');
+function join(p) {
+	return path.join(__dirname, p);
+}
 
 module.exports = {
-	entry: path.join(__dirname, 'src/index'),
+	entry: join('src/index'),
 	output: {
 		filename: 'mp-vue-tools.js',
 		path: path.join(__dirname, 'dist'),
@@ -23,76 +25,74 @@ module.exports = {
 		}
     },
 	module: {
-		rules: [
-			{
-		        test: /\.vue$/,
-		        loader: 'vue-loader',
-		        options: {
-		        	loaders: {
-		        		css: ExtractTextPlugin.extract({
-		        			use: ['css-loader', 'postcss-loader'],
-		        			fallback: 'vue-style-loader'
-		        		}),
-		        		less: ExtractTextPlugin.extract({
-		        			use: ['css-loader', 'postcss-loader', 'less-loader'],
-		        			fallback: 'vue-style-loader'
-		        		})
-		        	}
-		        },
-				include: path.join(__dirname, 'src')
-	    	},
-			{
-				test: /\.js$/,
-				loader: 'babel-loader',
-				include: path.join(__dirname, 'src')
+		rules: [{
+			test: /\.vue$/,
+			loader: 'vue-loader',
+			options: {
+				loaders: {
+					css: ExtractTextPlugin.extract({
+						use: ['css-loader', 'postcss-loader'],
+						fallback: 'vue-style-loader'
+					}),
+					less: ExtractTextPlugin.extract({
+						use: ['css-loader', 'postcss-loader', 'less-loader'],
+						fallback: 'vue-style-loader'
+					})
+				}
 			},
-			{
-				test: /\.css$/,
-				use: ExtractTextPlugin.extract({
-					use: ['css-loader', 'postcss-loader'],
-					fallback: 'vue-style-loader'
-				})
-			},
-			{
-				test: /\.less$/,
-				use: ExtractTextPlugin.extract({
-					use: ['css-loader', 'postcss-loader', 'less-loader'],
-					fallback: 'vue-style-loader'
-				}),
-				include: path.join(__dirname, 'src')
-			},
-		    {
-		        test: /\.(jpe?g|png|gif)?$/,
-				loader: 'file-loader',
-				include: path.join(__dirname, 'src/style/img'),				
-		        query: {
-			        name: '[name].[ext]',
-			        publicPath: './',
-			        outputPath: 'img/'
-		        }
-		    },
-		    {
-		        test: /\.(woff2?|eot|ttf|otf|svg)(\?.*)?$/,
-				loader: 'file-loader',
-				include: path.join(__dirname, 'src/style/fonts'),
-		        query: {
-			        name: '[name].[ext]',
-			        publicPath: './',
-			        outputPath: 'fonts/'
-		        }
-		    }
-		]
+			include: join('src')
+		},
+		{
+			test: /\.js$/,
+			loader: 'babel-loader',
+			include: join('src')
+		},
+		{
+			test: /\.css$/,
+			use: ExtractTextPlugin.extract({
+				use: ['css-loader', 'postcss-loader'],
+				fallback: 'vue-style-loader'
+			})
+		},
+		{
+			test: /\.less$/,
+			use: ExtractTextPlugin.extract({
+				use: ['css-loader', 'postcss-loader', 'less-loader'],
+				fallback: 'vue-style-loader'
+			}),
+			include: join('src')
+		},
+		{
+			test: /\.(jpe?g|png|gif)(\?.*)?$/,
+			loader: 'file-loader',
+			include: join('src/style/img'),				
+			query: {
+				name: '[name].[ext]',
+				publicPath: './img/',
+				outputPath: './img/'
+			}
+		},
+		{
+			test: /\.(woff2?|eot|ttf|otf|svg)(\?.*)?$/,
+			loader: 'file-loader',
+			include: join('src/style/fonts'),
+			query: {
+				name: '[name].[ext]',
+				publicPath: './fonts/',
+				outputPath: './fonts/'
+			}
+		}]
 	},
 	plugins: [
 		new webpack.DefinePlugin({ 
 	    	'process.env': {
-	    		NODE_ENV: '"development"' // 环境定义
+	    		NODE_ENV: JSON.stringify('development')
 	    	}
 	    }),
-	    new CopyWebpackPlugin([{
-	    	from: path.join(__dirname, 'src/static'),
-	    	to: path.join(__dirname, 'dist/static')
-	    }]),
-		cssExtract
+		new CleanWebpackPlugin([join('dist')], {
+			verbose: true,
+			allowExternal: true
+		}),
+		new ExtractTextPlugin('mp-vue-tools.css')
 	]
 };
