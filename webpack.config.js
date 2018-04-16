@@ -12,7 +12,7 @@ module.exports = {
 	entry: join('src/index'),
 	output: {
 		filename: 'mp-vue-tools.js',
-		path: path.join(__dirname, 'dist'),
+		path: join('dist'),
 		library: 'mp-vue-tools',
 		libraryTarget: 'umd'
 	},

@@ -152,35 +152,6 @@ textarea.form-control {
 }
 /*table end*/
 
-/*icon start*/
-.icon {
-    display: inline-block;
-    *display: inline;
-    width: 20px;
-    height: 20px;
-    margin-top: 3px;
-    vertical-align: middle;
-}
-.icon-xls {background: url(./img/tn-icon-file.png) -40px 0 no-repeat;}
-.icon-xlsx {background:url(./img/tn-icon-file.png) -200px 0 no-repeat;}
-.icon-doc {background:url(./img/tn-icon-file.png) -80px 0 no-repeat;}
-.icon-docx {background:url(./img/tn-icon-file.png) -179px 0 no-repeat;}
-.icon-ppt {background:url(./img/tn-icon-file.png) -60px 0 no-repeat;}
-.icon-pptx {background:url(./img/tn-icon-file.png) -220px 0 no-repeat;}
-.icon-pdf {background:url(./img/tn-icon-file.png) -100px 0 no-repeat;}
-.icon-txt {background:url(./img/tn-icon-file.png) -160px 0 no-repeat;}
-.icon-xml {background:url(./img/tn-icon-file.png) -20px -40px no-repeat;}
-.icon-csv {background:url(./img/tn-icon-file.png) -20px 0 no-repeat;}
-.icon-zip {background:url(./img/tn-icon-file.png) -140px 0 no-repeat;}
-.icon-rar {background:url(./img/tn-icon-file.png) -120px 0 no-repeat;}
-.icon-png {background:url(./img/tn-icon-file.png) -40px -20px no-repeat;}
-.icon-jpg {background:url(./img/tn-icon-file.png) 0px -20px no-repeat;}
-.icon-gif {background:url(./img/tn-icon-file.png) -20px -20px no-repeat;}
-.icon-js {background:url(./img/tn-icon-file.png) -60px -40px no-repeat;}
-.icon-css {background:url(./img/tn-icon-file.png) -40px -40px no-repeat;}
-.icon-more {background:url(./img/tn-icon-file.png) -77px -40px no-repeat;}
-/*icon end*/
-
 /*导航栏自定义样式 start*/
 .navbar {
     font-size: 14px;

@@ -5,6 +5,9 @@ export default {
     directiveName: 'table-order',
     inserted(el, { value }) {
         addClass(el, 'mp-table-order');
+        let sortIcon = document.createElement('span');
+        addClass(sortIcon, 'mp-table-order-icon');
+        el.appendChild(sortIcon);
         
         // 查找当前table-order对应的table
         let table;

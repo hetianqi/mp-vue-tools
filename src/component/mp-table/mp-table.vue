@@ -192,26 +192,47 @@ mp-table {
     z-index: 9999;
     cursor: col-resize;
 }
-.mp-table-order {
-    cursor: pointer;
-}
-.mp-table-order::after {
-    font-family: 'Glyphicons Halflings';
-    content: "\e119";
-    position: relative;
-    left: 2px;
-    top: 1px;
-    font-size: 12px;
-}
 .mp-table-order.asc,
 .mp-table-order.desc {
     color: #428bca;
 }
-.mp-table-order.asc::after {
-    content: "\e093";
+.mp-table-order-icon {
+    position: relative;
+    margin-left: 5px;
+    cursor: pointer;
 }
-.mp-table-order.desc::after {
-    content: "\e094";
+.mp-table-order-icon::before,
+.mp-table-order-icon::after {
+    content: "";
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    border: solid transparent;
+    border-width: 0 4px;
+}
+.mp-table-order-icon::before {
+    margin-top: -6px;
+    border-bottom-width: 6px;
+    border-bottom-color: #ccc;
+}
+.mp-table-order-icon::after {
+    margin-top: 1px;
+    border-top-width: 6px;
+    border-top-color: #ccc;
+}
+.mp-table-order.asc .mp-table-order-icon::before,
+.mp-table-order.desc .mp-table-order-icon::after {
+    margin-top: -3px;
+}
+.mp-table-order.asc .mp-table-order-icon::before {
+    border-bottom-color: #428bca;
+}
+.mp-table-order.desc .mp-table-order-icon::after {
+    border-top-color: #428bca;
+}
+.mp-table-order.asc .mp-table-order-icon::after,
+.mp-table-order.desc .mp-table-order-icon::before {
+    display: none;
 }
 /* 表格排序end */
 </style>
