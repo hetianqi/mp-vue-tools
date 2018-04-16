@@ -273,7 +273,8 @@
                 },
                 messageBox: function(type) {
                     messageBox[type]({
-                        content: '这是' + type + '框'
+                        content: '这是<span style="color: red; margin: 0 5px;">' + type + '</span>框',
+                        html: true
                     })
                     .then(function () {
                         alert('确定');
