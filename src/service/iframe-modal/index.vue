@@ -1,47 +1,27 @@
 <template>
-    <modal
+    <mp-modal
     class="iframe-modal"
     v-model="isShow"
     :title="title"
-    :backdrop="false"
     :footer="false"
-    :dismiss-btn="true"
     ref="modal"
-    @hide="onHide"
+    @hide="onClose"
     >
         <div class="iframe-box" ref="iframeBox">
             <iframe :src="src" frameborder="0" @load="onLoad"></iframe>
         </div>
-    </modal>
+    </mp-modal>
 </template>
 
 <script>
-import { Modal } from 'uiv';
+import MpModal from '../../component/mp-modal/index.vue';
+import props from './props';
 
 export default {
     components: {
-        Modal
+        [MpModal.name]: MpModal
     },
-    props: {
-        title: {
-            type: String,
-            required: true
-        },
-        src: {
-            type: String,
-            required: true
-        },
-        width: {
-            type: [Number, String],
-            default: 600
-        },
-        height: {
-            type: [Number, String],
-            default: 400
-        },
-        onLoad: Function,
-        onHide: Function
-    },
+    props,
     data() {
         return {
             isShow: false

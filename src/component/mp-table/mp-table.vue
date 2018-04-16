@@ -23,9 +23,8 @@
 
 <script>
 import onElementResize from '../../lib/on-element-resize';
-import getScrollbarWidth from '../../lib/get-scrollbar-width';
 import { requestAnimationFrame, removeOf } from '../../lib/util';
-import { on, domContains, removeDom } from '../../lib/dom-util';
+import { on, domContains, removeDom, addClass, removeClass, getScrollbarWidth } from '../../lib/dom-util';
 import props from './props';
 
 const queue = [];
@@ -72,9 +71,9 @@ export default {
             on(tableHeader, 'mouseenter', 'thead > tr > th', evt => {
                 let th = evt.eventTarget;
                 if (!th.querySelector('.mp-table-resize-line')) {
-                    th.classList.add('mp-table-resize');
+                    addClass(th, 'mp-table-resize');
                     let resizeLine = document.createElement('div');
-                    resizeLine.classList.add('mp-table-resize-line');
+                    addClass(resizeLine, 'mp-table-resize-line');
                     th.appendChild(resizeLine);
                 }
             });
@@ -82,7 +81,7 @@ export default {
             // 鼠标移开表头删除可拖动标识
             on(tableHeader, 'mouseleave', 'thead > tr > th', evt => {
                 let th = evt.eventTarget;
-                th.classList.remove('mp-table-resize');
+                removeClass(th, 'mp-table-resize');
                 removeDom(th.querySelector('.mp-table-resize-line'));
             });
 
@@ -101,7 +100,7 @@ export default {
                 let oldClientX = evt.clientX;
                 let oldWidth = th.offsetWidth;
                 let resizeMask = document.createElement('div');
-                resizeMask.classList.add('mp-table-resize-mask');
+                addClass(resizeMask, 'mp-table-resize-mask');
                 document.body.appendChild(resizeMask);
 
                 on(resizeMask, 'mousemove', evt => {

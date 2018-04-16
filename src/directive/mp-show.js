@@ -1,10 +1,12 @@
+import { addClass, removeClass } from '../lib/dom-util';
+
 const HIDDENCLASSNAME = 'hidden';
 
 function mpShowDirective(el, { value }) {
     if (value) {
-        el.classList.remove(HIDDENCLASSNAME);
+        removeClass(el, HIDDENCLASSNAME);
     } else {
-        el.classList.add(HIDDENCLASSNAME);
+        addClass(el, HIDDENCLASSNAME);
     }
 };
 

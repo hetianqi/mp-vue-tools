@@ -27,7 +27,7 @@ export function isNumber(it, isNullable, isNegative) {
     return (isNullable && it === null || Object.prototype.toString.call(it) === '[object Number]' && !isNaN(it)) && (isNegative || it >= 0);
 }
 
-// 是否为数字或字符串数字
+// 是否为字符串数字
 export function isStringNumber(it, isNullable, isNegative) {
     if (it === undefined) {
         return false;
@@ -42,7 +42,7 @@ export function isInteger(it, isNullable, isNegative) {
     return (isNullable && it === null || Math.floor(it) === it) && (isNegative || it >= 0);
 }
 
-// 是否为整数或字符串整数
+// 是否为字符串整数
 export function isStringInteger(it, isNullable, isNegative) {
     if (it === undefined) {
         return false;

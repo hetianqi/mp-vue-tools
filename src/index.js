@@ -6,22 +6,22 @@ import './style/index.less';
 import axios from 'axios';
 import axiosJsonp from './lib/axios-jsonp';
 import * as util from './lib/util';
+import * as domUtil from './lib/dom-util';
 
 import MpTable from './component/mp-table/index';
 import MpPager from './component/mp-pager/index.vue';
 import MpAutocomplete from './component/mp-autocomplete/index.vue';
+import MpModal from './component/mp-modal/index.vue';
 
 import MpShow from './directive/mp-show';
 import TextEllipsis from './directive/text-ellipsis';
 import TableOrder from './directive/table-order';
 
+import messageBox from './service/message-box';
 import iframeModal from './service/iframe-modal';
 import selector from './service/selector';
 
-import * as uiv from 'uiv';
-
 // polyfill
-import './lib/classlist-polyfill'; 
 import 'babel-polyfill';
 
 // 为axio增加jsonp支持
@@ -41,6 +41,7 @@ const MpVueTools = {
         Vue.component(MpTable.name, MpTable);
         Vue.component(MpPager.name, MpPager);
         Vue.component(MpAutocomplete.name, MpAutocomplete);
+        Vue.component(MpModal.name, MpModal);
 
         // 注册指令
         Vue.directive(MpShow.directiveName, MpShow);
@@ -54,20 +55,21 @@ if (typeof Vue !== 'undefined') {
     Vue.use(MpVueTools);
 }
 
+export default MpVueTools;
 export {
     // 组件
     MpTable,
     MpPager,
     MpAutocomplete,
+    MpModal,
 
     // 服务
+    messageBox,
     iframeModal,
     selector,
 
     // 工具类
     util,
-    axios as http,
-
-    // 导出uiv
-    uiv
+    domUtil,
+    axios as http
 };

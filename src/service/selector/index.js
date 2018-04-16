@@ -54,7 +54,7 @@ let selector = {
 			onLoad(evt) {
 				show(evt, option);
 			},
-			onHide() {
+			onClose() {
 				hide(option);
 			}
 		});
@@ -74,7 +74,7 @@ let selector = {
 			onLoad(evt) {
 				show(evt, option);
 			},
-			onHide() {
+			onClose() {
 				hide(option);
 			}
 		});
@@ -94,7 +94,7 @@ let selector = {
 			onLoad(evt) {
 				show(evt, option);
 			},
-			onHide() {
+			onClose() {
 				hide(option);
 			}
 		});
@@ -114,7 +114,7 @@ let selector = {
 			onLoad(evt) {
 				show(evt, option);
 			},
-			onHide() {
+			onClose() {
 				hide(option);
 			}
 		});
@@ -134,7 +134,7 @@ let selector = {
 			onLoad(evt) {
 				show(evt, option);
 			},
-			onHide() {
+			onClose() {
 				hide(option);
 			}
 		});
@@ -154,7 +154,7 @@ let selector = {
 			onLoad(evt) {
 				show(evt, option);
 			},
-			onHide() {
+			onClose() {
 				hide(option);
 			}
 		});
@@ -174,7 +174,7 @@ let selector = {
 			onLoad(evt) {
 				show(evt, option);
 			},
-			onHide() {
+			onClose() {
 				hide(option);
 			}
 		});
@@ -194,7 +194,7 @@ let selector = {
 			onLoad(evt) {
 				show(evt, option);
 			},
-			onHide() {
+			onClose() {
 				hide(option);
 			}
 		});
@@ -214,7 +214,7 @@ let selector = {
 			onLoad(evt) {
 				show(evt, option);
 			},
-			onHide() {
+			onClose() {
 				hide(option);
 			}
 		});
@@ -234,7 +234,7 @@ let selector = {
 			onLoad(evt) {
 				show(evt, option);
 			},
-			onHide() {
+			onClose() {
 				hide(option);
 			}
 		});

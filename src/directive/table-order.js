@@ -1,10 +1,10 @@
 import { queue } from '../component/mp-table/mp-table.vue';
-import { on, domContains } from '../lib/dom-util';
+import { on, domContains, addClass, removeClass } from '../lib/dom-util';
 
 export default {
     directiveName: 'table-order',
     inserted(el, { value }) {
-        el.classList.add('mp-table-order');
+        addClass(el, 'mp-table-order');
         
         // 查找当前table-order对应的table
         let table;
@@ -33,9 +33,9 @@ export default {
         });
 
         function setClass() {
-            el.classList.remove('asc', 'desc');
+            removeClass(el, ['asc', 'desc']);
             if (table.orderBy === value) {
-                el.classList.add(table.orderSort);
+                addClass(el, table.orderSort);
             }
         }
         setClass();

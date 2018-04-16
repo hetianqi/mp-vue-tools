@@ -1,5 +1,7 @@
+import { addClass } from '../lib/dom-util';
+
 function textEllipsisDirective(el, { value }) {
-    el.classList.add('text-ellipsis');
+    addClass(el, 'text-ellipsis');
     el.setAttribute('title', value);
     el.textContent = value;
 };

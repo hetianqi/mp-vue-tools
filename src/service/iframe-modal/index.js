@@ -1,19 +1,19 @@
 import Vue from 'vue'
-import IframeModal from './iframe-modal.vue';
+import IframeModal from './index.vue';
 import { removeDom } from '../../lib/dom-util';
 
 const queue = [];
 
-export default function init(option) {
-    let oldOnHide = option.onHide;
-    option.onHide = function (...args) {
+export default function iframeModal(options) {
+    let oldOnClose = options.onClose;
+    options.onClose = function (...args) {
         removeDom(instance.$el);
         instance.$destroy();
-        oldOnHide && oldOnHide.apply(this, args);
+        oldOnClose && oldOnClose.apply(this, args);
     };
     const instance = new Vue({
         extends: IframeModal,
-        propsData: option
+        propsData: options
     });
     instance.$mount();
     document.body.appendChild(instance.$el);
@@ -22,7 +22,7 @@ export default function init(option) {
     return instance;
 };
 
-init.close = function (instance) {
+iframeModal.close = function (instance) {
     if (!instance) {
         instance = queue.pop();
     }
