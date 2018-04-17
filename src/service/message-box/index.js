@@ -27,16 +27,23 @@ function init(options, type, resolve, reject) {
     queue[type].push(instance);
 }
 
-function alert(options) {
+function initModal(options, type) {
+    if (typeof options === 'string') {
+        options = {
+            content: options
+        };
+    }
     return new Promise((resolve, reject) => {
-        init(options, TYPES.ALERT, resolve, reject);
+        init(options, type, resolve, reject);
     });
 }
 
+function alert(options) {
+    return initModal(options, TYPES.ALERT);
+}
+
 function confirm(options) {
-    return new Promise((resolve, reject) => {
-        init(options, TYPES.CONFIRM, resolve, reject);
-    });
+    return initModal(options, TYPES.CONFIRM);
 }
 
 export default { alert, confirm };

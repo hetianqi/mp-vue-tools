@@ -53,7 +53,7 @@ export default {
     },
     watch: {
         value(v) {
-            this.$toggle(v)
+            this.$toggle(v);
         }
     },
     mounted() {
@@ -163,5 +163,8 @@ mp-modal {
 }
 .modal-xl {
     width: 1200px;
+}
+.modal-sm {
+    width: 400px;
 }
 </style>

@@ -5,6 +5,7 @@
     v-model="isShow"
     ref="modal"
     :title="title"
+    :size="size"
     :beforeClose="beforeClose"
     @hide="onHide"
     >
@@ -39,7 +40,7 @@ export default {
     },
     methods: {
         toggle(isShow) {
-            this.isShow = isShow;
+            this.$refs.modal.toggle(isShow);
         },
         close(msg) {
             this.toggle(false);

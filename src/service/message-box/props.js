@@ -2,6 +2,10 @@ export default {
     type: {
         type: Number,
         required: true
+    },    
+    size: {
+        type: String,
+        default: 'sm'
     },
     title: {
         type: String,
