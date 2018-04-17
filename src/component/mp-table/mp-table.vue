@@ -192,6 +192,9 @@ mp-table {
     z-index: 9999;
     cursor: col-resize;
 }
+.mp-table-order {
+    cursor: pointer;
+}
 .mp-table-order.asc,
 .mp-table-order.desc {
     color: #428bca;
@@ -199,7 +202,6 @@ mp-table {
 .mp-table-order-icon {
     position: relative;
     margin-left: 5px;
-    cursor: pointer;
 }
 .mp-table-order-icon::before,
 .mp-table-order-icon::after {
