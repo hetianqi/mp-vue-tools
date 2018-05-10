@@ -2,7 +2,11 @@
   "name": "mp-vue-tools",
   "version": "1.0.0",
   "description": "Vue相关的工具，包括组件、插件、指令等",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "files": [
+    "src",
+    "dist/*"
+  ],
   "scripts": {
     "build": "webpack --config webpack.config.js --watch"
   },
